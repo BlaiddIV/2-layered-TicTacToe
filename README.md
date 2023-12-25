@@ -20,12 +20,13 @@ The motivation behind this project stems from the desire to inject strategic dep
 - The game proceeds with players taking turns, and the inner TicTacToe to be played in next is determined by the cell where the previous player placed their symbol.
 - A player can freely choose where to place their symbol within the designated inner TicTacToe.
 - A cell in the outer grid is marked with the respective player's symbol, and victory is achieved if the inner TicTacToe is won in the conventional way.
-- The overall game is won when a player achieves victory in the outer TicTacToe grid.
-- 
+- The overall game is won when a player achieves victory in the outer TicTacToe grid. 
 
 ## Contributions:
 Contributions and feedback are welcome!
 
+## Future goals:
+The project aims to develop an AI for the game, adding a challenging computer opponent to further enhance the gaming experience after the game is fully completed.
 
 ## !Note!: 
 The game's concept is not original, and this project serves as a practical learning experience. Read more about the idea, for instance, at https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe.
