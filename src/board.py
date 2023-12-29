@@ -17,6 +17,7 @@ class TicTacToe_Board_2_layers:
         OUTER_FIELD_POSITIONS (list): List of positions for the outer field.
         board_status (dict): Dictionary to store the status of each position on the board.
         where_to_play_next: Represents the position in the outer field where the next move should be made.
+        active_player (str): Represents the player (either 'X' or 'O') who is currently making a move.
     """
 
     EMPTY_CELL = ''
@@ -63,6 +64,9 @@ class TicTacToe_Board_2_layers:
         
         # Represents the position in the outer field where the next move should be made.
         self.where_to_play_next = None
+        
+        # Represents the player who is currently making a move.
+        self.active_player = self.PLAYER_X  # Start with player X.
         
     def is_inner_field_full(self, pos_outer_field) -> bool:
         """
