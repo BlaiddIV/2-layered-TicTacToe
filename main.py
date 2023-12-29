@@ -93,19 +93,6 @@ def draw_game_board():
         pygame.draw.line(game_screen, OUTER_FIELD_LINE_COLOR, (0, y), (SCREEN_WIDTH, y), OUTER_LINE_THICKNESS)
     # ~~~~~~~~~~~~~~~~ End Draw outer field (red) ~~~~~~~~~~~~~~~~ #
     
-    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
-    reference_point = GRID_REFERENCE_POINTS["mid-mid"]
-    pygame.draw.line(game_screen, PLAYER_X_COLOR, (reference_point[0], reference_point[1]), 
-                         (reference_point[0] + CELL_SIZE_INNER_FIELD, reference_point[1] + CELL_SIZE_INNER_FIELD), PLAYERS_SYMBOL_THICKNESS)
-        
-    pygame.draw.line(game_screen, PLAYER_X_COLOR, (reference_point[0], reference_point[1] + CELL_SIZE_INNER_FIELD), 
-                         (reference_point[0] + CELL_SIZE_INNER_FIELD, reference_point[1]), PLAYERS_SYMBOL_THICKNESS)
-    
-    reference_point = GRID_REFERENCE_POINTS["top-mid"]
-    pygame.draw.circle(game_screen, PLAYER_O_COLOR, (reference_point[0] + CELL_SIZE_INNER_FIELD / 2, 
-                                                  reference_point[1] + CELL_SIZE_INNER_FIELD / 2), CELL_SIZE_INNER_FIELD / 2, PLAYERS_SYMBOL_THICKNESS)
-    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! # 
-    
     # Display all drawings on the game board. 
     pygame.display.update()
 
