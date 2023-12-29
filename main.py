@@ -41,14 +41,14 @@ CELL_SIZE_OUTER_FIELD = SCREEN_WIDTH // 3
 CELL_SIZE_INNER_FIELD = SCREEN_WIDTH // 9
 
 # Colors for lines and player symbols on the board.
-OUTER_FIELD_LINE_COLOR = (255, 0, 0)
-INNER_FIELD_LINE_COLOR = (255, 255, 255)
-PLAYER_X_COLOR = (0, 0, 255)
-PLAYER_O_COLOR = (0, 255, 0)
+OUTER_FIELD_LINE_COLOR = (68, 204, 221)
+INNER_FIELD_LINE_COLOR = (85, 17, 55)
+PLAYER_X_COLOR = (68, 238, 34)
+PLAYER_O_COLOR = (238, 170, 85)
 
 # Thickness values for lines and player symbols on the board.
 OUTER_LINE_THICKNESS = 5
-INNER_LINE_THICKNESS = 2
+INNER_LINE_THICKNESS = 3
 PLAYERS_SYMBOL_THICKNESS = 3
 
 # Coordinates of grid reference points for cell positions (top left of a cell).
@@ -92,7 +92,20 @@ def draw_game_board():
     for y in range(SCREEN_HEIGHT // 3, SCREEN_HEIGHT - 1, SCREEN_HEIGHT // 3): # The "-1" ensures that a third line is not drawn.
         pygame.draw.line(game_screen, OUTER_FIELD_LINE_COLOR, (0, y), (SCREEN_WIDTH, y), OUTER_LINE_THICKNESS)
     # ~~~~~~~~~~~~~~~~ End Draw outer field (red) ~~~~~~~~~~~~~~~~ #
-     
+    
+    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+    reference_point = GRID_REFERENCE_POINTS["mid-mid"]
+    pygame.draw.line(game_screen, PLAYER_X_COLOR, (reference_point[0], reference_point[1]), 
+                         (reference_point[0] + CELL_SIZE_INNER_FIELD, reference_point[1] + CELL_SIZE_INNER_FIELD), PLAYERS_SYMBOL_THICKNESS)
+        
+    pygame.draw.line(game_screen, PLAYER_X_COLOR, (reference_point[0], reference_point[1] + CELL_SIZE_INNER_FIELD), 
+                         (reference_point[0] + CELL_SIZE_INNER_FIELD, reference_point[1]), PLAYERS_SYMBOL_THICKNESS)
+    
+    reference_point = GRID_REFERENCE_POINTS["top-mid"]
+    pygame.draw.circle(game_screen, PLAYER_O_COLOR, (reference_point[0] + CELL_SIZE_INNER_FIELD / 2, 
+                                                  reference_point[1] + CELL_SIZE_INNER_FIELD / 2), CELL_SIZE_INNER_FIELD / 2, PLAYERS_SYMBOL_THICKNESS)
+    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! # 
+    
     # Display all drawings on the game board. 
     pygame.display.update()
 
