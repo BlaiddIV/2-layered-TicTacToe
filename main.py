@@ -121,6 +121,38 @@ def draw_inner_field(reference_point):
         pygame.draw.line(game_screen, INNER_FIELD_LINE_COLOR, (reference_point[0], y_position), (reference_point[0] + 3 * CELL_SIZE_INNER_FIELD, y_position), INNER_LINE_THICKNESS)
     
 # ~~~~~~~~~~~~~~~~~~~~~~~~~ End Functions for drawing everything ~~~~~~~~~~~~~~~~~~~~~~~~~ #
+def transform_coordinates_to_indices(x_coordinate, y_coordinate) -> tuple:
+    """
+    Transform pixel coordinates to indices for inner and outer fields.
+
+    Args:
+        x_coordinate (int): The x-coordinate of the pixel.
+        y_coordinate (int): The y-coordinate of the pixel.
+
+    Returns:
+        tuple: A tuple containing the outer field position (str), row index of inner field (int), and column index of inner field (int).
+
+    Usage:
+        result = transform_coordinates_to_indices(x, y)
+    """
+    # Keep in mind that the y-coordinate corresponds to the row, and the x-coordinate corresponds to the column.
+    # Calculate row and column indices for the inner field.
+    row_inner_field = y_coordinate // CELL_SIZE_INNER_FIELD % 3
+    col_inner_field = x_coordinate // CELL_SIZE_INNER_FIELD % 3
+
+    # Calculate row and column indices for the outer field.
+    row_outer_field = y_coordinate // CELL_SIZE_OUTER_FIELD
+    col_outer_field = x_coordinate // CELL_SIZE_OUTER_FIELD
+
+    # Find the corresponding outer field position (str) based on indices.
+    str_outer_field = ""
+    for key, value in active_game_board.POSITIONS_MAPPING_DICT.items():
+        if value == (row_outer_field, col_outer_field):
+            str_outer_field = key
+            break
+
+    # Return the result as a tuple.
+    return (str_outer_field, row_inner_field, col_inner_field)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Start Game loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 def main():
@@ -129,12 +161,47 @@ def main():
     """
     game_is_active = True
 
+    # Main game loop.
     while game_is_active:
+        
+        # Event handling loop.
         for event in pygame.event.get():
+            
+            # Quit event handling.
             if event.type == pygame.QUIT:
                 game_is_active = False
                 break
-        
+            
+            # Mouse button down event handling. Player is picking a cell in the inner field.
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                
+                # Get mouse coordinates from player pick.
+                mouse_event_x = event.pos[0]
+                mouse_event_y = event.pos[1]
+                
+                # Transform pixel coordinates to game board indices.
+                transformed_board_indices = transform_coordinates_to_indices(mouse_event_x, mouse_event_y)
+                
+                # Check if the outer field cell is already won. If so, the player can choose any inner field.
+                if active_game_board.where_to_play_next != None and active_game_board.is_cell_of_outer_field_won(active_game_board.where_to_play_next):
+                    active_game_board.where_to_play_next = None
+                
+                # Check if the clicked cell is valid and not already occupied.
+                if (transformed_board_indices[0] == active_game_board.where_to_play_next or active_game_board.where_to_play_next == None) and active_game_board.is_cell_of_inner_field_empty(transformed_board_indices[0], transformed_board_indices[1], transformed_board_indices[2]):
+                    # Update game board by given move.
+                    active_game_board.make_move(
+                        active_game_board.active_player,
+                        transformed_board_indices[0],
+                        transformed_board_indices[1],
+                        transformed_board_indices[2],
+                    )
+                    
+                    # Update the 'where_to_play_next' attribute, based on previous move.
+                    active_game_board.update_where_to_play_next(transformed_board_indices[1], transformed_board_indices[2])
+
+                    # Change the active player after valid move.
+                    active_game_board.active_player = active_game_board.PLAYER_O if active_game_board.active_player == active_game_board.PLAYER_X else active_game_board.PLAYER_X
+                   
         # Update the game screen.   
         draw_game_board()
 
