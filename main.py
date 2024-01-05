@@ -196,6 +196,10 @@ def main():
                         transformed_board_indices[2],
                     )
                     
+                    # Check if the inner field is a draw, and if so, update the board by putting a "D" in the active board.
+                    if active_game_board[transformed_board_indices[0]] != active_game_board.DRAW_SYMBOL and active_game_board.is_inner_field_full(transformed_board_indices[0]):
+                        active_game_board.mark_outer_field_as_draw(transformed_board_indices[0])
+                    
                     # Update the 'where_to_play_next' attribute, based on previous move.
                     active_game_board.update_where_to_play_next(transformed_board_indices[1], transformed_board_indices[2])
 
@@ -204,6 +208,19 @@ def main():
                    
         # Update the game screen.   
         draw_game_board()
+        
+        # Check if the entire game is a draw.
+        if active_game_board.is_outer_field_full() and active_game_board.check_for_win_outer_field() == None:
+            game_is_active = False
+            time.sleep(5)
+            break
+        
+        # Check if one player has won the entire game.
+        winner = active_game_board.check_for_win_outer_field()
+        if winner != None:
+            game_is_active = False
+            time.sleep(5)
+            break
 
     # Stop the game.
     pygame.quit()
