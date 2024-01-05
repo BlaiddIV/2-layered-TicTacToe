@@ -81,8 +81,13 @@ class TicTacToe_Board_2_layers:
         Usage:
             is_full = tic_tac_toe_board.is_inner_field_full('top-left')
         """
-        # Check if every cell in the specified inner field is filled.      
-        return all([all([inner_cell != self.EMPTY_CELL for inner_cell in inner_row]) for inner_row in self.board_status[pos_outer_field]])
+        # Check if the inner field is already won or a draw.
+        if type(self.board_status[pos_outer_field]) == str:
+            return False
+        
+        # Check if every cell in the specified inner field is filled. 
+        else:     
+            return all([all([inner_cell != self.EMPTY_CELL for inner_cell in inner_row]) for inner_row in self.board_status[pos_outer_field]])
     
     def is_outer_field_full(self) -> bool:
         """
