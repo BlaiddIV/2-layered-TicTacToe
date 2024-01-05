@@ -119,8 +119,61 @@ def draw_inner_field(reference_point):
     for i in range(1, 3):
         y_position = reference_point[1] + i * CELL_SIZE_INNER_FIELD
         pygame.draw.line(game_screen, INNER_FIELD_LINE_COLOR, (reference_point[0], y_position), (reference_point[0] + 3 * CELL_SIZE_INNER_FIELD, y_position), INNER_LINE_THICKNESS)
+        
+def draw_winner_screen(winner):
+    """
+    Draw the winner screen with the specified winner.
+
+    Args:
+        winner (str): Symbol of the winning player ('X' or 'O').
+
+    Usage:
+        draw_winner_screen('X')
+    """
+    # Fill the screen with white color
+    game_screen.fill((255, 255, 255))
+
+    # Set up the font
+    font = pygame.font.Font(None, 75)
+
+    # Render the text with the winner information
+    text = font.render(f"Player {winner} wins!", True, (0, 0, 0))
+
+    # Get the rectangle of the text and center it on the screen
+    text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
     
+    # Draw the text on the screen
+    game_screen.blit(text, text_rect)
+
+    # Update the display
+    pygame.display.update()
+    
+def draw_draw_screen():
+    """
+    Draws the screen for a draw.
+
+    Usage:
+        draw_draw_screen()
+    """
+    # Fill the screen with white color
+    game_screen.fill((255, 255, 255))
+
+    # Set up the font
+    font = pygame.font.Font(None, 75)
+
+    # Render the text for a draw
+    text = font.render("It's a draw!", True, (0, 0, 0))
+
+    # Get the rectangle of the text and center it on the screen
+    text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+    
+    # Draw the text on the screen
+    game_screen.blit(text, text_rect)
+
+    # Update the display
+    pygame.display.update()
 # ~~~~~~~~~~~~~~~~~~~~~~~~~ End Functions for drawing everything ~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Start helper functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 def transform_coordinates_to_indices(x_coordinate, y_coordinate) -> tuple:
     """
     Transform pixel coordinates to indices for inner and outer fields.
@@ -153,7 +206,7 @@ def transform_coordinates_to_indices(x_coordinate, y_coordinate) -> tuple:
 
     # Return the result as a tuple.
     return (str_outer_field, row_inner_field, col_inner_field)
-
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ End helper functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Start Game loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 def main():
     """
@@ -212,6 +265,7 @@ def main():
         # Check if the entire game is a draw.
         if active_game_board.is_outer_field_full() and active_game_board.check_for_win_outer_field() == None:
             game_is_active = False
+            draw_draw_screen()
             time.sleep(5)
             break
         
@@ -219,6 +273,7 @@ def main():
         winner = active_game_board.check_for_win_outer_field()
         if winner != None:
             game_is_active = False
+            draw_winner_screen(winner)
             time.sleep(5)
             break
 
