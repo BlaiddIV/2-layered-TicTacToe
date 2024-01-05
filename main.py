@@ -172,17 +172,17 @@ def draw_player_symbol(game_screen, coordinates, player):
     reference_point = GRID_REFERENCE_POINTS[pos_outer_field]
     
     if player == active_game_board.PLAYER_X:
-        # Draw an 'X' symbol for Player X with respect to the reference point in the outer field.
-        pygame.draw.line(game_screen, PLAYER_X_COLOR, (reference_point[0] + CELL_SIZE_INNER_FIELD * col_inner_field, reference_point[1] + CELL_SIZE_INNER_FIELD * row_inner_field), 
-                         (reference_point[0] + CELL_SIZE_INNER_FIELD * (col_inner_field + 1), reference_point[1] + CELL_SIZE_INNER_FIELD * (row_inner_field + 1)), PLAYERS_SYMBOL_THICKNESS)
+        # Draw an 'X' symbol for Player X with respect to the reference point in the outer field. Added some constants for better looking (no overlap with field lines).
+        pygame.draw.line(game_screen, PLAYER_X_COLOR, (reference_point[0] + CELL_SIZE_INNER_FIELD * col_inner_field + 2.5, reference_point[1] + CELL_SIZE_INNER_FIELD * row_inner_field + 2.5), 
+                         (reference_point[0] + CELL_SIZE_INNER_FIELD * (col_inner_field + 1) - 2.5, reference_point[1] + CELL_SIZE_INNER_FIELD * (row_inner_field + 1) - 2.5), PLAYERS_SYMBOL_THICKNESS)
         
-        pygame.draw.line(game_screen, PLAYER_X_COLOR, (reference_point[0] + CELL_SIZE_INNER_FIELD * (col_inner_field + 1), reference_point[1] + CELL_SIZE_INNER_FIELD * row_inner_field), 
-                         (reference_point[0] + CELL_SIZE_INNER_FIELD * col_inner_field, reference_point[1] + CELL_SIZE_INNER_FIELD * (row_inner_field + 1)), PLAYERS_SYMBOL_THICKNESS)
+        pygame.draw.line(game_screen, PLAYER_X_COLOR, (reference_point[0] + CELL_SIZE_INNER_FIELD * (col_inner_field + 1) - 2.5, reference_point[1] + CELL_SIZE_INNER_FIELD * row_inner_field + 2.5), 
+                         (reference_point[0] + CELL_SIZE_INNER_FIELD * col_inner_field + 2.5, reference_point[1] + CELL_SIZE_INNER_FIELD * (row_inner_field + 1) - 2.5), PLAYERS_SYMBOL_THICKNESS)
     
     elif player == active_game_board.PLAYER_O:
-        # Draw an 'O' symbol for Player O with respect to the reference point in the outer field.
+        # Draw an 'O' symbol for Player O with respect to the reference point in the outer field. Scaling the radius a bit for a better looking (no overlap with field lines).
         pygame.draw.circle(game_screen, PLAYER_O_COLOR, (reference_point[0] + CELL_SIZE_INNER_FIELD * col_inner_field + CELL_SIZE_INNER_FIELD // 2, 
-                                                         reference_point[1] + CELL_SIZE_INNER_FIELD * row_inner_field + CELL_SIZE_INNER_FIELD // 2), CELL_SIZE_INNER_FIELD // 2, PLAYERS_SYMBOL_THICKNESS)
+                                                         reference_point[1] + CELL_SIZE_INNER_FIELD * row_inner_field + CELL_SIZE_INNER_FIELD // 2), CELL_SIZE_INNER_FIELD // 2.1, PLAYERS_SYMBOL_THICKNESS)
         
 def draw_inner_field_win(game_screen, pos_outer_field, player):
     """
