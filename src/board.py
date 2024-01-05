@@ -310,7 +310,7 @@ class TicTacToe_Board_2_layers:
 
         # Check each line for a winner in the outer field.
         for line in lines_to_check:
-            if (all([type(self.board_status[outer_cell]) is not list for outer_cell in line])) and (self.board_status[line[0]] == self.board_status[line[1]] == self.board_status[line[2]]):
+            if (all([type(self.board_status[outer_cell]) is not list for outer_cell in line])) and (self.board_status[line[0]] == self.board_status[line[1]] == self.board_status[line[2]]) and self.board_status[line[0]] != self.DRAW_SYMBOL:
                 return self.board_status[line[0]]  # Winner
 
         return None  # No winner.
