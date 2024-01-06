@@ -245,7 +245,7 @@ class TicTacToe_Board_2_layers:
             is_draw = tic_tac_toe_board.check_for_draw_inner_field('top-left')
         """
         # Check if the inner field is full and if there is no winner.
-        return self.is_inner_field_full(pos_outer_field) and not self.check_for_win_inner_field()
+        return self.is_inner_field_full(pos_outer_field) and not self.check_for_win_inner_field(pos_outer_field)
     
     def check_for_draw_outer_field(self) -> bool:
         """
