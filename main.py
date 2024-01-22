@@ -410,14 +410,12 @@ def main():
             game_is_active = False
             draw_draw_screen()
             time.sleep(5)
-            break
         
         # Check if one player has won the entire game.
         winner = active_game_board.check_for_win_outer_field()
         if winner != None:
             game_is_active = False
             draw_winner_screen(winner)
-            break
 
     # Stop the game.
     pygame.quit()
